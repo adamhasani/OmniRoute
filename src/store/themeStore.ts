@@ -58,13 +58,13 @@ const useThemeStore = create<ThemeState>()(
 );
 
 export const COLOR_THEMES: Record<string, string> = {
-  coral: "#e54d5e",
-  blue: "#3b82f6",
-  red: "#ef4444",
-  green: "#22c55e",
-  violet: "#8b5cf6",
-  orange: "#f97316",
-  cyan: "#06b6d4",
+  coral: "#0e6b52",
+  blue: "#2d6c8f",
+  red: "#b3352c",
+  green: "#2f7d5a",
+  violet: "#6d5aa8",
+  orange: "#b06a2e",
+  cyan: "#1b7f8c",
 };
 
 // Apply light/dark theme to document

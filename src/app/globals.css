@@ -26,78 +26,74 @@
   --fd-sidebar-width: 220px;
 }
 
-/* OpenClaw × ClawHub Color Palette */
+/* Calista Luxury Palette — Deep Jade Emerald + Champagne Gold */
 :root {
   --desktop-safe-top: 0px;
   --desktop-safe-bottom: 0px;
   color-scheme: light;
 
-  /* Primary - Coral Red (OpenClaw) */
-  --color-primary: #e54d5e;
-  --color-primary-hover: #c93d4e;
+  /* Primary - Deep Jade Emerald */
+  --color-primary: #0e6b52;
+  --color-primary-hover: #0b5a45;
 
-  /* Accent - Indigo/Violet (buttons, links, gradients) */
-  --color-accent: #6366f1;
-  --color-accent-hover: #8b5cf6;
-  --color-accent-light: #a855f7;
+  /* Accent - Champagne Gold (buttons, links, gradients) */
+  --color-accent: #b08d45;
+  --color-accent-hover: #9a7a38;
+  --color-accent-light: #d4b06a;
 
   /* Semantic */
-  --color-error: #ef4444;
-  --color-success: #22c55e;
-  --color-warning: #f59e0b;
+  --color-error: #b3352c;
+  --color-success: #2f7d5a;
+  --color-warning: #c08a1d;
 
   /* Traffic lights */
   --color-traffic-red: #ff5f56;
   --color-traffic-yellow: #ffbd2e;
   --color-traffic-green: #27c93f;
 
-  /* Light theme */
-  --color-bg: #f9f9fb;
-  --color-bg-alt: #f0f0f5;
-  --color-bg-primary: #f9f9fb;
-  --color-bg-subtle: #f0f0f5;
+  /* Light theme — warm ivory */
+  --color-bg: #f7f6f2;
+  --color-bg-alt: #efece5;
+  --color-bg-primary: #f7f6f2;
+  --color-bg-subtle: #efece5;
   --color-surface: #ffffff;
   --color-card: #ffffff;
-  --color-sidebar: #f5f5fa;
-  --color-border: rgba(0, 0, 0, 0.08);
-  --color-text-main: #1a1a2e;
-  --color-text-primary: #1a1a2e;
-  --color-text-muted: #71717a;
+  --color-sidebar: #f1eee7;
+  --color-border: rgba(20, 26, 22, 0.09);
+  --color-text-main: #17211c;
+  --color-text-primary: #17211c;
+  --color-text-muted: #6b746e;
 
   /* Fumadocs light theme */
-  --color-fd-background: #f9f9fb;
-  --color-fd-foreground: #1a1a2e;
-  --color-fd-muted: #f0f0f5;
-  --color-fd-muted-foreground: #71717a;
+  --color-fd-background: #f7f6f2;
+  --color-fd-foreground: #17211c;
+  --color-fd-muted: #efece5;
+  --color-fd-muted-foreground: #6b746e;
   --color-fd-popover: #ffffff;
-  --color-fd-popover-foreground: #1a1a2e;
+  --color-fd-popover-foreground: #17211c;
   --color-fd-card: #ffffff;
-  --color-fd-card-foreground: #1a1a2e;
-  --color-fd-border: rgba(0, 0, 0, 0.08);
-  --color-fd-primary: #e54d5e;
+  --color-fd-card-foreground: #17211c;
+  --color-fd-border: rgba(20, 26, 22, 0.09);
+  --color-fd-primary: #0e6b52;
   --color-fd-primary-foreground: #ffffff;
-  --color-fd-secondary: #f0f0f5;
-  --color-fd-secondary-foreground: #1a1a2e;
-  --color-fd-accent: rgba(229, 77, 94, 0.08);
-  --color-fd-accent-foreground: #1a1a2e;
-  --color-fd-ring: #e54d5e;
+  --color-fd-secondary: #efece5;
+  --color-fd-secondary-foreground: #17211c;
+  --color-fd-accent: rgba(14, 107, 82, 0.08);
+  --color-fd-accent-foreground: #17211c;
+  --color-fd-ring: #0e6b52;
 
-  /* Shadows */
-  --shadow-soft: 0 1px 3px rgba(0, 0, 0, 0.02), 0 4px 12px rgba(0, 0, 0, 0.015);
-  --shadow-warm: 0 2px 12px -2px rgba(229, 77, 94, 0.12);
-  --shadow-elevated: 0 12px 28px -4px rgba(20, 20, 40, 0.06);
+  /* Shadows — softer, warmer */
+  --shadow-soft: 0 1px 3px rgba(23, 33, 28, 0.03), 0 4px 14px rgba(23, 33, 28, 0.025);
+  --shadow-warm: 0 2px 12px -2px rgba(176, 141, 69, 0.14);
+  --shadow-elevated: 0 14px 32px -6px rgba(20, 26, 22, 0.08);
 
-  /* Graph-paper wallpaper grid — shared visual identity with the marketing site
-     (_mono_repo/omnirouteSite/css). Light theme values. Rendered by body::before.
-     Opacity tuned up from the site's 0.045 so the wallpaper is actually visible on
-     the dense dashboard (cards/chrome cover most of the viewport). */
-  --grid-line: rgba(0, 0, 0, 0.07);
+  /* Graph-paper wallpaper grid */
+  --grid-line: rgba(23, 33, 28, 0.06);
   --grid-size: 32px;
-  --section-alt: rgba(0, 0, 0, 0.022);
+  --section-alt: rgba(23, 33, 28, 0.02);
 
-  /* Identity tokens mirrored from the site. Definitions only in this phase —
-     components are repointed to them in a later phase. */
-  --surface-2: #f5f5fa;
+  /* Identity tokens mirrored from the site */
+  --surface-2: #f1eee7;
   --radius: 14px;
   --radius-control: 9px;
   --grad-brand: linear-gradient(135deg, var(--color-primary), var(--color-accent-light));
@@ -138,18 +134,18 @@
   --color-fd-card: #161b22;
   --color-fd-card-foreground: #e6e6ef;
   --color-fd-border: rgba(255, 255, 255, 0.08);
-  --color-fd-primary: #e54d5e;
-  --color-fd-primary-foreground: #ffffff;
+  --color-fd-primary: #0e6b52;
+  --color-fd-primary-foreground: #e6e6ef;
   --color-fd-secondary: #111520;
   --color-fd-secondary-foreground: #e6e6ef;
-  --color-fd-accent: rgba(229, 77, 94, 0.12);
+  --color-fd-accent: rgba(14, 107, 82, 0.18);
   --color-fd-accent-foreground: #e6e6ef;
-  --color-fd-ring: #e54d5e;
+  --color-fd-ring: #0e6b52;
 
   /* Dark shadows */
   --shadow-soft: 0 1px 3px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1);
-  --shadow-warm: 0 2px 12px -2px rgba(229, 77, 94, 0.15);
-  --shadow-elevated: 0 12px 28px -4px rgba(0, 0, 0, 0.3);
+  --shadow-warm: 0 2px 12px -2px rgba(176, 141, 69, 0.22);
+  --shadow-elevated: 0 14px 32px -6px rgba(0, 0, 0, 0.4);
 
   /* Graph-paper wallpaper grid — dark theme values (tuned up from 0.035 for visibility). */
   --grid-line: rgba(255, 255, 255, 0.06);
