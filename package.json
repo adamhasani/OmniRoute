@@ -5,6 +5,7 @@
   "type": "module",
   "bin": {
     "omniroute": "bin/omniroute.mjs",
+    "omniroute-lite": "bin/omniroute-lite.mjs",
     "omniroute-reset-password": "bin/reset-password.mjs"
   },
   "files": [
