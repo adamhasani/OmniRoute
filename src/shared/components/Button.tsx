@@ -3,14 +3,14 @@
 import { cn } from "@/shared/utils/cn";
 
 const variants = {
-  primary: "bg-[image:var(--grad-brand)] text-white shadow-sm hover:brightness-105",
-  accent: "bg-accent text-white shadow-sm hover:bg-accent-hover",
+  primary: "bg-[#059669] hover:bg-[#047857] text-white shadow-xs transition-colors font-medium",
+  accent: "bg-[#059669] hover:bg-[#047857] text-white shadow-xs transition-colors font-medium",
   secondary:
-    "bg-white dark:bg-white/10 border border-black/10 dark:border-white/10 text-text-main hover:bg-black/5 dark:hover:bg-white/5",
-  outline: "border border-black/15 dark:border-white/15 text-text-main hover:bg-black/5",
-  ghost: "text-text-muted hover:bg-black/5 dark:hover:bg-white/5 hover:text-text-main",
-  warning: "bg-amber-500 text-white hover:bg-amber-600 shadow-sm",
-  danger: "bg-red-500 text-white hover:bg-red-600 shadow-sm",
+    "bg-surface border border-border text-text-main hover:bg-white/5 transition-colors",
+  outline: "border border-border text-text-main hover:bg-white/5 transition-colors",
+  ghost: "text-text-muted hover:bg-white/5 hover:text-text-main transition-colors",
+  warning: "bg-amber-600 text-white hover:bg-amber-700 shadow-xs transition-colors",
+  danger: "bg-red-600 text-white hover:bg-red-700 shadow-xs transition-colors",
 };
 
 export type ButtonVariant = keyof typeof variants;

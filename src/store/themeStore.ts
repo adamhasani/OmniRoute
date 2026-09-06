@@ -18,9 +18,9 @@ interface ThemeState {
 const useThemeStore = create<ThemeState>()(
   persist(
     (set, get) => ({
-      theme: THEME_CONFIG.defaultTheme,
-      colorTheme: "coral",
-      customColor: "#3b82f6",
+      theme: "dark",
+      colorTheme: "emerald",
+      customColor: "#059669",
 
       setTheme: (theme) => {
         set({ theme });
@@ -58,12 +58,13 @@ const useThemeStore = create<ThemeState>()(
 );
 
 export const COLOR_THEMES: Record<string, string> = {
+  emerald: "#059669",
   coral: "#e54d5e",
   blue: "#3b82f6",
   red: "#ef4444",
-  green: "#22c55e",
+  green: "#059669",
   violet: "#8b5cf6",
-  orange: "#f97316",
+  orange: "#f06f47",
   cyan: "#06b6d4",
 };
 

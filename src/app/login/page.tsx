@@ -175,7 +175,7 @@ export default function LoginPage() {
           </div>
 
           <p className="text-center text-xs text-text-muted/60 mt-8">
-            OmniRoute — {t("unifiedProxy")}
+            OmliteRoute - {t("unifiedProxy")}
           </p>
         </div>
       </div>
@@ -215,7 +215,7 @@ export default function LoginPage() {
           </div>
 
           <p className="text-center text-xs text-text-muted/60 mt-8">
-            OmniRoute — {t("unifiedAiApiProxy")}
+            OmliteRoute - {t("unifiedAiApiProxy")}
           </p>
         </div>
       </div>
@@ -234,11 +234,11 @@ export default function LoginPage() {
           >
             <div className="mb-10">
               <div className="flex items-center gap-3 mb-8">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-hover flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl bg-[#059669] border border-emerald-500/20 shadow-xs flex items-center justify-center">
                   <span className="material-symbols-outlined text-white text-[20px]">hub</span>
                 </div>
                 <span className="text-xl font-semibold text-text-main tracking-tight">
-                  OmniRoute
+                  OmliteRoute
                 </span>
               </div>
               <h1 className="text-2xl font-bold text-text-main tracking-tight">{t("signIn")}</h1>

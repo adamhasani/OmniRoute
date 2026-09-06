@@ -17,19 +17,19 @@ const inter = Inter({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#0b0f1a",
+  themeColor: "#130e1b",
   viewportFit: "cover",
 };
 
 export async function generateMetadata() {
   const settings = await getRootLayoutSettings();
-  const instanceName = settings.instanceName;
+  const instanceName = settings.instanceName || "OmliteRoute";
   const customFaviconUrl = settings.customFaviconUrl || settings.customFaviconBase64;
 
   return {
-    title: `${instanceName} — AI Gateway for Multi-Provider LLMs`,
+    title: `${instanceName} - Ultra-Lightweight AI Gateway`,
     description:
-      "OmniRoute is an AI gateway for multi-provider LLMs. One endpoint for all your AI providers.",
+      "OmliteRoute is an ultra-lightweight AI gateway for multi-provider LLMs. Low-RAM (~120MB), 356+ providers, and zero bloat.",
     manifest: "/manifest.webmanifest",
     applicationName: instanceName,
     appleWebApp: {
@@ -60,7 +60,7 @@ export default async function RootLayout({ children }) {
   const isRtl = RTL_LOCALES.includes(locale as (typeof RTL_LOCALES)[number]);
 
   return (
-    <html lang={locale} dir={isRtl ? "rtl" : "ltr"} suppressHydrationWarning>
+    <html lang={locale} dir={isRtl ? "rtl" : "ltr"} className="dark" suppressHydrationWarning>
       <head>
         {/* Pre-hydration cleanup: browser extensions (Bitdefender's
             bis_skin_checked, Grammarly's data-gr-ext-installed, LanguageTool's

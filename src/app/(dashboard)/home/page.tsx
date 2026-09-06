@@ -19,10 +19,6 @@ export default async function HomePage() {
     <>
       {isBootstrapped && <BootstrapBanner />}
       <FirstRunReadinessCard setupComplete={Boolean(settings.setupComplete)} />
-      <KimiSponsorBanner />
-      <CheaperInferenceSponsorBanner />
-      <VscodeCopilotBanner />
-      <NewsBanner />
       <HomePageClient machineId={machineId} />
     </>
   );
