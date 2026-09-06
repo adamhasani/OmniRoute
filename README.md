@@ -14,6 +14,7 @@
 <br/>
 
 [![npm version](https://img.shields.io/npm/v/omliteroute.svg?style=for-the-badge&logo=npm&color=CB3837)](https://www.npmjs.com/package/omliteroute)
+[![npm downloads](https://img.shields.io/npm/dt/omliteroute.svg?style=for-the-badge&logo=npm&color=4c1)](https://www.npmjs.com/package/omliteroute)
 [![GitHub Stars](https://img.shields.io/github/stars/adamhasani/omliteroute?style=for-the-badge&logo=github&color=059669)](https://github.com/adamhasani/omliteroute/stargazers)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/adamhasani/omliteroute/ci.yml?branch=main&style=for-the-badge&logo=github&label=Build)](https://github.com/adamhasani/omliteroute/actions)
@@ -25,7 +26,7 @@
 <br/>
 
 ```bash
-# ⚡ Install globally via npm
+# ⚡ Install globally via npm (Recommended)
 npm install -g omliteroute
 omliteroute
 
@@ -39,7 +40,7 @@ npx omliteroute
 
 ## 💡 What is OmliteRoute?
 
-**OmliteRoute** is an independent, hyper-optimized fork and evolution of OmniRoute engineered specifically for **laptops, low-resource VPSs, and developer workstations**.
+**OmliteRoute** is an independent, hyper-optimized AI proxy and model router engineered specifically for **laptops, low-resource VPSs, and developer workstations**.
 
 Standard AI proxy routers frequently consume **1.5 to 3.0 GB of RAM** and drain battery with background scraping, unmanaged caches, and heavy WebGL animations. **OmliteRoute strips away all non-routing bloatware** while preserving **100% of the core AI routing engine**:
 
@@ -159,17 +160,25 @@ npm install
 docker compose -f docker-compose.lite.yml up -d
 ```
 
-### 2. Commands & Live Monitoring
+---
 
+### 2. CLI Command Reference
+
+| Command | Description |
+| :--- | :--- |
+| `omliteroute` | Starts OmliteRoute Gateway in Lite mode (port 20128) |
+| `omliteroute top` | Opens real-time terminal monitor (RAM, health, models, latency) |
+| `omliteroute --port <number>` | Runs gateway on a custom port |
+| `omliteroute-reset-password` | Resets dashboard admin password directly via terminal |
+| `npx omliteroute` | Runs OmliteRoute on-demand without global installation |
+
+---
+
+### 3. Terminal Live Monitoring (`omliteroute top`)
+
+Launch an interactive terminal monitor anytime without opening the browser:
 ```bash
-# Start OmliteRoute Gateway
-omliteroute
-
-# Launch Real-Time Terminal Health & Latency Monitor
 omliteroute top
-
-# Custom Port
-omliteroute --port 3000
 ```
 
 ```text
@@ -195,7 +204,7 @@ omliteroute --port 3000
 ===============================================================================
 ```
 
-The web dashboard will be live at:
+The web dashboard is live at:
 👉 **`http://localhost:20128`**
 
 Default initial login password: **`CHANGEME`** *(or configure via `INITIAL_PASSWORD`)*.
@@ -233,12 +242,34 @@ response = client.chat.completions.create(
 print(response.choices[0].message.content)
 ```
 
+### Node.js / TypeScript (OpenAI SDK)
+```typescript
+import OpenAI from "openai";
+
+const client = new OpenAI({
+  baseURL: "http://localhost:20128/v1",
+  apiKey: "YOUR_API_KEY",
+});
+
+const response = await client.chat.completions.create({
+  model: "auto",
+  messages: [{ role: "user", content: "Explain quantum computing simply." }],
+});
+console.log(response.choices[0].message.content);
+```
+
 ### Claude Code CLI
 ```bash
 export ANTHROPIC_BASE_URL="http://localhost:20128"
 export ANTHROPIC_API_KEY="YOUR_API_KEY"
 claude
 ```
+
+### Cursor / Cline / Roo Code / OpenCode
+Set the OpenAI Base URL in your editor settings:
+* **Base URL:** `http://localhost:20128/v1`
+* **API Key:** `sk-omlite-...` *(generated in OmliteRoute dashboard -> API Keys)*
+* **Model:** `auto` *(or choose any combo/provider model ID)*
 
 ---
 
@@ -257,9 +288,10 @@ claude
 
 ## 📜 License & Acknowledgments
 
-* **Creator & Maintainer:** [Adam Hasani](https://github.com/adamhasani) (`@adamhasani`)
+* **Creator & Maintainer:** [Adam Hasani](https://github.com/adamhasani) ([@adamhasani](https://github.com/adamhasani))
+* **Package Registry:** [npmjs.com/package/omliteroute](https://www.npmjs.com/package/omliteroute)
+* **GitHub Repository:** [github.com/adamhasani/omliteroute](https://github.com/adamhasani/omliteroute)
 * **License:** [MIT License](LICENSE)
-* Based on the routing primitives of OmniRoute, completely restructured and optimized for lightweight personal and production use.
 
 <div align="center">
 
