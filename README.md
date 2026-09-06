@@ -1,5 +1,10 @@
 <div align="center">
 
+<img src="./docs/screenshots/omliteroute-main.png" alt="OmliteRoute Dashboard" width="880"/>
+
+<br/>
+<br/>
+
 # 🪶 OmliteRoute
 
 ### The Ultra-Lightweight, Low-RAM AI Gateway & Smart Model Router
@@ -67,6 +72,37 @@ Standard AI proxy routers frequently consume **1.5 to 3.0 GB of RAM** and drain 
 * Minimalist matte dark design (`#130e1b`, cards `#181324`, accents emerald `#059669`).
 * **Zero WebGL Canvas:** Home provider topology replaced with a responsive, instant-loading CSS card grid with status pills (`READY`, `ROUTING`, `RECENT`, `ERR`).
 * **Telegram-Ready:** Pre-configured CSP and iframe headers allowing the dashboard to open directly as a Telegram WebApp (TWA) without "Internal Server Error" blocks.
+
+---
+
+## 📸 Dashboard & Feature Preview
+
+<table width="100%">
+  <tr>
+    <td width="50%" align="center">
+      <b>⚡ Providers & Accounts Management</b><br/>
+      <sub>Grid of 356+ active AI providers, key test statuses, and account rotation</sub><br/><br/>
+      <img src="./docs/screenshots/omliteroute-providers.png" alt="OmliteRoute Providers Management" width="100%"/>
+    </td>
+    <td width="50%" align="center">
+      <b>🎯 Model Combos & Smart Routing</b><br/>
+      <sub>Multi-model fallback chains and auto-routing pipelines</sub><br/><br/>
+      <img src="./docs/screenshots/omliteroute-combos.png" alt="OmliteRoute Model Combos" width="100%"/>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center">
+      <b>⚙️ Lean Storage & Maintenance Settings</b><br/>
+      <sub>Clamped SQLite cache, 500-record rolling call log, and vacuum tools</sub><br/><br/>
+      <img src="./docs/screenshots/omliteroute-settings.png" alt="OmliteRoute Settings" width="100%"/>
+    </td>
+    <td width="50%" align="center">
+      <b>📱 Mobile View (Telegram WebApp / TWA)</b><br/>
+      <sub>Native mobile-responsive layout for Telegram in-app browsing without iframe errors</sub><br/><br/>
+      <img src="./docs/screenshots/omliteroute-mobile.png" alt="OmliteRoute Mobile View" width="55%"/>
+    </td>
+  </tr>
+</table>
 
 ---
 
