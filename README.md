@@ -970,51 +970,126 @@ Auto-trigger by token threshold, flip on the adaptive dial, pin a named profile,
 
 <div align="center">
 
-# 🪶 OmniRoute Lite — Low-RAM & Laptop Edition
+# 🪶 OmniRoute Lite — Deep Technical Architecture & Low-RAM Edition
 
-**Designed for laptops, low-spec VPSs, and developers who want maximum AI gateway speed with minimum resource usage.**
+**Engineered for laptops, low-spec VPS environments, and developers who want maximum AI gateway throughput with minimum resource footprint.**
 
 </div>
 
-Standard OmniRoute can consume 1–3 GB RAM due to Electron desktop runtimes, Next.js React Server Components, 40+ i18n dictionaries, and 15+ background sync pollers. **OmniRoute Lite** strips the bloat while keeping **100% of the core AI routing and proxy engine**:
+Standard OmniRoute is designed as an all-in-one enterprise platform that frequently consumes **1–3 GB of RAM** and significant CPU cycles. **OmniRoute Lite** strips out all unnecessary non-routing bloat while keeping **100% of the core AI routing engine, auto-fallback, and multi-provider compatibility intact**.
 
-| Metric | Standard OmniRoute | OmniRoute Lite 🪶 | Savings |
+---
+
+### 🔍 1. Why Standard OmniRoute Consumes 1–3 GB RAM
+
+1. **Greedy V8 Heap Ceiling (~35% Physical RAM):** In `scripts/build/runtime-env.mjs`, Node.js calculates `--max-old-space-size` dynamically as ~35% of total system RAM (up to 4096 MB). On a 16 GB laptop, V8 is allocated ~4 GB. As a result, the V8 Garbage Collector rarely triggers because memory pressure appears low, allowing prompt and streaming buffers to accumulate up to 1.5–2 GB.
+2. **15+ Concurrent Background Sync Pollers:** In `src/instrumentation-node.ts`, the server spawns dozens of background loops on startup: Chatbot Arena ELO sync, live pricing scrapers, models.dev pollers, radar feed sync, live WebSocket server (port 20132), and conductor agent fleets. These timers continuously wake the CPU and prevent memory from settling.
+3. **Hot-Path Gamification Write Overhead:** In `src/lib/gamification/events.ts`, every single chat completion invokes `emitGamificationEvent()`, executing SQLite writes to award XP, compute level-ups, check daily login streaks, and evaluate badge thresholds.
+4. **Heavy WebGL / Canvas Orbital Topology Graph:** In `ProviderTopology.tsx`, the home dashboard renders 6 orbital rings with 356 provider nodes using `@xyflow/react`. In the browser, this allocates an active WebGL/2D context, causing 15–25% laptop CPU usage and 200MB+ browser RAM consumption.
+5. **Monolithic i18n Dictionary Payload (37 MB):** The frontend ships with 42 foreign language JSON files (~1 MB each) loaded into memory.
+6. **Unbounded Call Log Growth:** Every request writes comprehensive telemetry payloads to SQLite `call_logs` without automatic pruning, causing `storage.sqlite` to balloon from 5 MB to hundreds of megabytes.
+
+---
+
+### 🛡️ 2. Design Philosophy: *Sacrosanct Core vs. Zero-Bloat Edge*
+
+* **PRESERVED 100% INTACT (Sacrosanct):**
+  * All **356 Upstream AI Providers** (Gemini, Claude, DeepSeek, OpenAI, Grok, Kimi, Mistral, Ollama, etc.).
+  * **Auto-Fallback & Multi-Account Rotation** on HTTP 429, token exhaustion, or provider downtime.
+  * **Bidirectional Format Translation** (`/v1/chat/completions`, `/v1/messages`, `/v1/models`).
+  * **RTK + Caveman Prompt Compression** saving 15–85% token costs.
+  * **Full Next.js Web Dashboard** rendered in clean Haute Luxury dark mode.
+* **PRUNED & DISABLED:**
+  * Gamification XP, badges, leaderboards, and streaks.
+  * 15 background sync intervals and unneeded network loops.
+  * Heavy WebGL canvas and bundled VS Code Monaco Editor.
+  * 40 foreign language dictionaries (kept English `en` and Indonesian `id`).
+  * 53 redundant/unused sidebar features and unbuilt routes.
+
+---
+
+### 🛠️ 3. Detailed Technical Code Modifications
+
+#### A. V8 Heap Clamping & Active Idle GC (`scripts/build/runtime-env.mjs` & `bin/omniroute-lite.mjs`)
+* `calibrateHeapFallbackMb()` clamps the V8 heap to **512 MB** under Lite mode (instead of 35% of total RAM).
+* Spawns Node.js with `--expose-gc` and `--dns-result-order=ipv4first`.
+* Dedicated executable binary `bin/omniroute-lite.mjs` registered globally in `package.json`.
+
+#### B. Pruned Background Services & Idle GC Sweeper (`src/instrumentation-node.ts`)
+* `isLiteMode()` automatically causes `isBackgroundServicesDisabled()` to return `true`.
+* Skips 15 background schedulers: `liveServer` (WS port 20132), `initArenaEloSync`, `initRadarSyncScheduler`, `initPricingSync`, `initModelsDevSync`, `initEmbedWsProxy`, `initConductorBridge`, `startMemoryDecaySweep`, and `initMemoryBackends`.
+* Background watcher triggers `global.gc()` every 60 seconds if RSS exceeds 350 MB while idle.
+
+#### C. Lean SQLite Database Footprint (`src/lib/db/core.ts` & `src/lib/usage/callLogs.ts`)
+* SQLite `cache_size` reduced from 64 MB (`-65536`) to **2 MB** (`-2048`).
+* Memory-mapped I/O (`mmap_size`) reduced from 256 MB to **16 MB**.
+* Auto-purge hook injected into `saveCallLogOperation()`:
+  ```sql
+  DELETE FROM call_logs WHERE rowid NOT IN (
+    SELECT rowid FROM call_logs ORDER BY timestamp DESC LIMIT 500
+  );
+  ```
+  Guarantees `storage.sqlite` permanently stays below **~10 MB**.
+
+#### D. Hot-Path Gamification Bypass (`src/lib/gamification/events.ts`)
+* Immediate one-line guard at the start of `emitGamificationEvent()`:
+  ```typescript
+  if (process.env.OMNIROUTE_LITE === "1" || process.env.OMNI_LITE === "1") return;
+  ```
+  Eliminates all SQLite writes and XP computations from the inference hot path.
+
+#### E. Frontend Optimization & Dead Page Stubbing
+* **i18n Pruning (`src/i18n/messages/`):** Deleted 40 unused language JSON files (saving **35.5 MB** disk/memory). Added automatic fallback to `en.json` in `src/i18n/request.ts`.
+* **Haute Luxury Provider Grid (`ProviderTopology.tsx`):** Removed `@xyflow/react` WebGL canvas; replaced with an instant-loading, CSS-only provider card grid with real-time status pill badges (`READY`, `ROUTING`, `RECENT`, `ERR`).
+* **Monaco Editor Replacement (`MonacoEditor.tsx`):** Replaced the ~20 MB bundled VS Code Monaco editor with a lightweight dark-luxury monospace textarea.
+* **Page Stubbing:** Stubbed 26 unbuilt/pruned routes in `src/app/(dashboard)/dashboard/` so the Next.js compiler skips their dependency graphs.
+
+#### F. Streamlined Sidebar Navigation (`src/shared/constants/sidebarVisibility/sections.ts`)
+* Removed 541 lines of dead sidebar items.
+* Consolidated into 7 core, fully functional sections:
+  1. **Home** (`/home`)
+  2. **OmniProxy** (*Endpoints, API Keys, Providers, Combos*)
+  3. **Analytics** (*Usage Overview*)
+  4. **Costs** (*Costs Overview*)
+  5. **Monitoring** (*Logs, Health*)
+  6. **Configuration** (*Settings, Sidebar Options*)
+  7. **Help** (*Changelog*)
+
+#### G. Telegram WebApp (TWA) Mobile Compatibility
+* In Caddy reverse proxy, stripped `X-Frame-Options: DENY` and injected Telegram-compatible CSP:
+  ```caddy
+  header_down -X-Frame-Options
+  header_down Content-Security-Policy "frame-ancestors 'self' https://web.telegram.org https://oauth.telegram.org https://telegram.org https://*.telegram.org;"
+  ```
+  Allows seamless embedded rendering inside Telegram mobile apps without "Internal Server Error" blocks.
+
+---
+
+### 📊 4. Performance & Efficiency Benchmarks
+
+| Evaluation Metric | Standard OmniRoute | OmniRoute Lite 🪶 | Efficiency Gain |
 | :--- | :---: | :---: | :---: |
 | **Server RAM (Idle)** | 600 MB – 1.2 GB | **~120 – 160 MB** | **~75% less RAM** |
-| **Server RAM (Under Load)** | 1.5 GB – 3.0 GB | **~250 – 400 MB** | **~85% less RAM** |
-| **Browser Tab CPU / RAM** | 15–25% CPU · 500 MB RAM | **< 1% CPU · 40 MB RAM** | **Zero GPU / Canvas drain** |
-| **Database Disk Growth** | Unbounded (100–500+ MB) | **Capped < 10 MB** (auto-purge 500) | **Permanent lean SQLite** |
-| **Startup Time** | 7–12s | **~1.5s** | **5x faster boot** |
+| **Server RAM (Peak Load)** | 1.5 GB – 3.0 GB | **~250 – 400 MB** | **~85% less RAM** |
+| **Browser CPU Usage** | 15% – 25% *(WebGL canvas)* | **< 1%** *(CSS grid)* | **Zero laptop GPU drain** |
+| **Database Disk Growth** | Unbounded (100–500+ MB) | **< 10 MB** *(auto-purge 500)* | **Stable long-term** |
+| **Translation Payload** | 37.0 MB (42 languages) | **1.5 MB** (en & id) | **35.5 MB freed** |
+| **Cold Startup Time** | 7–12s | **~1.5s** | **5x faster boot** |
 
-### 🚀 Running OmniRoute Lite
+---
+
+### 🚀 5. How to Run OmniRoute Lite
 
 ```bash
-# Option 1: Direct binary
+# Option 1: Using the dedicated binary (recommended)
 omniroute-lite
 
-# Option 2: CLI flag
+# Option 2: Using the standard CLI with --lite flag
 omniroute serve --lite
 
-# Option 3: Environment variable
+# Option 3: Via environment variable
 OMNIROUTE_LITE=1 omniroute
 ```
-
-### ✂️ What OmniRoute Lite Optimizes & Prunes
-
-* **V8 Heap Clamped to 512MB + Active Idle GC:** Node.js V8 Garbage Collector actively purges transient prompt buffers during idle periods, keeping memory low.
-* **Lean SQLite Storage:** SQLite cache is clamped to **2 MB** (down from 64 MB), `mmap_size` clamped to 16 MB (down from 256 MB), and `call_logs` table automatically caps at the **latest 500 records**.
-* **15+ Background Pollers Disabled:** Skips Arena ELO sync, Radar sync, pricing scrapers, models.dev pollers, and real-time live WS daemon (port 20132).
-* **Zero-Overhead Home Grid:** Replaces the heavy WebGL / canvas orbital topology graph (`@xyflow/react`) with an elegant, responsive Haute Luxury CSS card grid.
-* **Stripped 40 Foreign Languages:** Purges 35.5 MB of unneeded translation JSONs, keeping clean English (`en`) and Indonesian (`id`) with automatic fallback.
-* **Hot-Path Gamification Bypassed:** Zero XP scoring or badge queries executed on inference requests.
-* **Pruned Sidebar Navigation:** Streamlines the dashboard down to the 11 essential core features (Endpoints, API Keys, Providers, Combos, Analytics, Costs, Logs, Health, Settings, Changelog).
-
-### 🛡️ Preserved Core Features (100% Intact)
-* All **356 AI Providers** & Upstream Connections.
-* **Auto-fallback & Multi-Account Fallback** on 429 / Quota limits.
-* **OpenAI & Anthropic Claude format bidirectional translation** (`/v1/chat/completions`, `/v1/messages`, `/v1/models`).
-* **RTK + Caveman Prompt Compression**.
-* Full official Web Dashboard at `http://localhost:20128`.
 
 <br/>
 
