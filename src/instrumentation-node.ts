@@ -102,7 +102,14 @@ export async function ensureDbReadyForBoot(
   }
 }
 
+export function isLiteMode(): boolean {
+  const raw = process.env.OMNIROUTE_LITE || process.env.OMNI_LITE;
+  if (!raw) return false;
+  return new Set(["1", "true", "yes", "on"]).has(raw.trim().toLowerCase());
+}
+
 function isBackgroundServicesDisabled(): boolean {
+  if (isLiteMode()) return true;
   const raw = process.env.OMNIROUTE_DISABLE_BACKGROUND_SERVICES;
   if (!raw) return false;
   return new Set(["1", "true", "yes", "on"]).has(raw.trim().toLowerCase());
@@ -329,6 +336,22 @@ export async function registerQuotaFetchers(): Promise<void> {
 
 export async function registerNodejs(): Promise<void> {
   markServerStarting();
+
+  if (isLiteMode()) {
+    console.log("[STARTUP] ⚡ Omni Lite mode enabled: minimal memory footprint, background bloat pruned");
+    if (typeof (globalThis as unknown as { gc?: () => void }).gc === "function") {
+      const gcTimer = setInterval(() => {
+        try {
+          const mem = process.memoryUsage();
+          if (mem.rss > 350 * 1024 * 1024) {
+            (globalThis as unknown as { gc: () => void }).gc();
+          }
+        } catch {}
+      }, 60_000);
+      gcTimer.unref?.();
+      console.log("[STARTUP] ⚡ Idle V8 GC sweeper initialized (target RSS < 350MB)");
+    }
+  }
 
   // Rename the process title so OmniRoute is identifiable in ps/htop instead
   // of the generic "next-server" standalone server name.

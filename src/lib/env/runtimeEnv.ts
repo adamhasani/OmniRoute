@@ -63,6 +63,7 @@ export const webRuntimeEnvSchema = z.object({
   AUTH_COOKIE_SECURE: optionalBooleanEnv,
   PRICING_SYNC_ENABLED: optionalBooleanEnv,
   OMNIROUTE_DISABLE_BACKGROUND_SERVICES: optionalBooleanEnv,
+  OMNIROUTE_LITE: optionalBooleanEnv,
   CLOUD_URL: optionalHttpUrl,
   NEXT_PUBLIC_CLOUD_URL: optionalHttpUrl,
   OMNIROUTE_PUBLIC_BASE_URL: optionalHttpUrl,

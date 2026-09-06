@@ -31,6 +31,11 @@ export async function emitGamificationEvent(params: {
 }): Promise<void> {
   const { apiKeyId, action, metadata } = params;
 
+  // Omni Lite: completely bypass gamification overhead on chat request pipeline
+  if (process.env.OMNIROUTE_LITE === "1" || process.env.OMNI_LITE === "1") {
+    return;
+  }
+
   if (!apiKeyId) return; // Skip if no API key
 
   try {

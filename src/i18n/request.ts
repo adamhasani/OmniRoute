@@ -131,9 +131,17 @@ export default getRequestConfig(async () => {
 
   locale = resolveRequestedLocale(locale, LOCALES, LOCALE_ALIASES, DEFAULT_LOCALE);
 
-  const localeMessages = normalizeComplianceEventTypes(
-    (await import(`./messages/${locale}.json`)).default as Record<string, unknown>
-  );
+  let localeMessages: Record<string, unknown>;
+  try {
+    localeMessages = normalizeComplianceEventTypes(
+      (await import(`./messages/${locale}.json`)).default as Record<string, unknown>
+    );
+  } catch {
+    locale = FALLBACK_LOCALE;
+    localeMessages = normalizeComplianceEventTypes(
+      (await import(`./messages/${FALLBACK_LOCALE}.json`)).default as Record<string, unknown>
+    );
+  }
 
   // G1: fall back to EN for any missing key. EN is loaded only once per request
   // and only when the active locale is not EN itself (no-op).

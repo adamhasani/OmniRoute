@@ -1290,7 +1290,9 @@ export function getDbInstance(): SqliteDatabase {
   db.pragma("busy_timeout = 2000");
   db.pragma("journal_mode = WAL");
   db.pragma("synchronous = NORMAL");
-  db.pragma(`cache_size = -${DEFAULT_DATABASE_SETTINGS.optimization.cacheSize}`);
+  const isLiteMode = process.env.OMNIROUTE_LITE === "1" || process.env.OMNI_LITE === "1";
+  const effectiveCacheSize = isLiteMode ? 2048 : DEFAULT_DATABASE_SETTINGS.optimization.cacheSize;
+  db.pragma(`cache_size = -${effectiveCacheSize}`);
   db.pragma("temp_store = MEMORY");
   db.exec(SCHEMA_SQL);
   ensureProviderConnectionsColumns(db);
@@ -1317,12 +1319,13 @@ export function getDbInstance(): SqliteDatabase {
 
   applyStoredDatabaseOptimizationSettings(db);
 
-  // Apply mmap_size from stored settings (migration 046), fallback to 256MiB
+  // Apply mmap_size from stored settings (migration 046), fallback to 16MiB in lite or 256MiB in standard
   try {
     const mmapRow = db
       .prepare("SELECT value FROM key_value WHERE namespace = ? AND key = ?")
       .get("databaseSettings", "mmapSize") as { value: string } | undefined;
-    const mmapSize = mmapRow ? Math.max(0, parseInt(mmapRow.value, 10) || 0) : 268435456;
+    const defaultMmap = isLiteMode ? 16777216 : 268435456;
+    const mmapSize = mmapRow ? Math.max(0, parseInt(mmapRow.value, 10) || 0) : defaultMmap;
     if (mmapSize > 0) {
       db.pragma(`mmap_size = ${mmapSize}`);
     }

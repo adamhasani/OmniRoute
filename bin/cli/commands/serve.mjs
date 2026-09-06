@@ -68,6 +68,7 @@ export function registerServe(program) {
       t("serve.tls_key") ||
         "Path to the TLS private key (PEM) to serve HTTPS (also OMNIROUTE_TLS_KEY)"
     )
+    .option("--lite", "Start in Omni Lite mode (low memory footprint, pruned background services)")
     .action(async (opts) => {
       await runServe(opts);
     });
@@ -143,6 +144,15 @@ export async function runServe(opts = {}) {
   const dashboardPort = parsePort(process.env.DASHBOARD_PORT ?? String(port), port);
   const noOpen = opts.open === false;
 
+  const isLite =
+    opts.lite === true ||
+    process.env.OMNIROUTE_LITE === "1" ||
+    process.env.OMNI_LITE === "1";
+  if (isLite) {
+    process.env.OMNIROUTE_LITE = "1";
+    process.env.OMNIROUTE_DISABLE_BACKGROUND_SERVICES = "1";
+  }
+
   console.log(`
 \x1b[36m   ____                  _ ____              _
    / __ \\                (_) __ \\            | |
@@ -151,7 +161,7 @@ export async function runServe(opts = {}) {
   | |__| | | | | | | | | | | | \\ \\ (_) | |_| | ||  __/
    \\____/|_| |_| |_|_| |_|_|_|  \\_\\___/ \\__,_|\\__\\___|
 \x1b[0m`);
-  console.log(`\x1b[2m  v${_pkg.version}\x1b[0m\n`);
+  console.log(`\x1b[2m  v${_pkg.version}\x1b[0m${isLite ? " \x1b[35m[OMNI LITE]\x1b[0m" : ""}\n`);
 
   const nodeSupport = getNodeRuntimeSupport();
   if (!nodeSupport.nodeCompatible) {
@@ -251,6 +261,8 @@ export async function runServe(opts = {}) {
     PORT: String(dashboardPort),
     DASHBOARD_PORT: String(dashboardPort),
     API_PORT: String(apiPort),
+    OMNIROUTE_LITE: isLite ? "true" : "false",
+    OMNIROUTE_DISABLE_BACKGROUND_SERVICES: isLite ? "true" : (process.env.OMNIROUTE_DISABLE_BACKGROUND_SERVICES || "false"),
     // #10492: HOSTNAME is standard shell state on Unix-like systems, not an
     // OmniRoute bind setting. The resolver only keeps its legacy meaning on
     // Windows; OMNIROUTE_SERVER_HOST is the cross-platform explicit setting.

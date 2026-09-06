@@ -604,6 +604,14 @@ async function saveCallLogOperation(entry: any): Promise<void> {
       requestSummary,
     });
 
+    if (process.env.OMNIROUTE_LITE === "1" || process.env.OMNI_LITE === "1") {
+      try {
+        db.prepare(
+          "DELETE FROM call_logs WHERE rowid NOT IN (SELECT rowid FROM call_logs ORDER BY timestamp DESC LIMIT 500)"
+        ).run();
+      } catch {}
+    }
+
     scheduleCallLogRotation();
   } catch (error) {
     console.error(

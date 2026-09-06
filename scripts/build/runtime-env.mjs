@@ -30,6 +30,9 @@ export function resolveMaxOldSpaceMb(value, fallback = 512) {
  * @param {number | undefined | null} totalmemBytes — typically `os.totalmem()`
  */
 export function calibrateHeapFallbackMb(totalmemBytes) {
+  if (process.env.OMNIROUTE_LITE === "1" || process.env.OMNI_LITE === "1") {
+    return 512;
+  }
   const totalMb = Number(totalmemBytes) / (1024 * 1024);
   if (!Number.isFinite(totalMb) || totalMb <= 0) return 512;
   const target = Math.floor(totalMb * 0.35);
@@ -136,7 +139,12 @@ export function buildServerNodeOptions(env = process.env, memoryLimit) {
  * @returns {string[]}
  */
 export function buildNodeHeapArgs(env = process.env, memoryLimit) {
-  return envHasExplicitHeapFlag(env) ? [] : [`${MAX_OLD_SPACE_FLAG}=${memoryLimit}`];
+  const isLite = env?.OMNIROUTE_LITE === "1" || env?.OMNI_LITE === "1" || process.env.OMNIROUTE_LITE === "1" || process.env.OMNI_LITE === "1";
+  const flags = envHasExplicitHeapFlag(env) ? [] : [`${MAX_OLD_SPACE_FLAG}=${memoryLimit}`];
+  if (isLite && !flags.includes("--expose-gc")) {
+    flags.push("--expose-gc");
+  }
+  return flags;
 }
 
 /**
