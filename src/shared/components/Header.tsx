@@ -241,6 +241,15 @@ export default function Header({
         )}
       </div>
 
+      {/* Engine Status Badge */}
+      <div className="hidden xl:flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#181324] border border-white/[0.08] text-[11px] font-mono ml-4">
+        <span className="size-1.5 rounded-full bg-[#059669] animate-pulse" />
+        <span className="text-text-muted">Gateway</span>
+        <span className="text-[#34d399] font-bold">20128</span>
+        <span className="text-border">|</span>
+        <span className="text-text-muted font-normal">Lite Mode</span>
+      </div>
+
       {/* Right actions */}
       <div className="flex items-center gap-3 ml-auto">
         {onOpenCommandPalette && (

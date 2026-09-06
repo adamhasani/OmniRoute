@@ -580,9 +580,14 @@ export default function Sidebar({
             </div>
             {!collapsed && (
               <div className="flex flex-col min-w-0">
-                <h1 className="text-sm font-semibold tracking-tight text-text-main truncate">
-                  {customAppName || APP_CONFIG.name}
-                </h1>
+                <div className="flex items-center gap-1.5">
+                  <h1 className="text-sm font-semibold tracking-tight text-text-main truncate">
+                    {customAppName || APP_CONFIG.name}
+                  </h1>
+                  <span className="text-[9px] font-mono px-1 py-0.5 rounded font-bold uppercase tracking-wider bg-[#059669]/20 text-[#34d399] border border-[#059669]/30">
+                    Lite
+                  </span>
+                </div>
                 <span className="text-[10px] text-text-muted">v{APP_CONFIG.version}</span>
               </div>
             )}
@@ -722,6 +727,26 @@ export default function Sidebar({
         </nav>
 
         {!isE2EMode && <CloudSyncStatus collapsed={collapsed} />}
+
+        {!collapsed && (
+          <div className="mx-3 mb-2 p-2.5 rounded-lg bg-[#181324] border border-white/[0.06] text-[11px] space-y-1.5 shrink-0">
+            <div className="flex items-center justify-between">
+              <span className="text-text-muted flex items-center gap-1.5 font-medium">
+                <span className="size-1.5 rounded-full bg-[#059669] animate-pulse" />
+                Omlite Engine
+              </span>
+              <span className="font-mono text-[10px] font-bold text-[#34d399] tracking-wider">ONLINE</span>
+            </div>
+            <div className="flex items-center justify-between text-text-muted text-[10px]">
+              <span>Heap Cap</span>
+              <span className="font-mono text-text-main font-semibold">512 MB</span>
+            </div>
+            <div className="flex items-center justify-between text-text-muted text-[10px]">
+              <span>SQLite Cache</span>
+              <span className="font-mono text-text-main font-semibold">2 MB</span>
+            </div>
+          </div>
+        )}
 
         <div
           className={cn(

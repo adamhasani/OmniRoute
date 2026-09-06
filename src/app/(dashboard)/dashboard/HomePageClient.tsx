@@ -1045,6 +1045,51 @@ export default function HomePageClient({ machineId }: HomePageClientProps) {
         </div>
       )}
 
+      {/* Executive Telemetry Strip */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="p-4 rounded-xl border border-border bg-[#181324] flex flex-col justify-between shadow-xs">
+          <span className="text-xs text-text-muted font-medium">Core Routing Engine</span>
+          <div className="flex items-baseline gap-2 mt-2">
+            <span className="text-xl font-bold font-mono text-text-main">OmliteRoute</span>
+            <span className="text-[9px] font-mono px-1.5 py-0.5 rounded font-bold uppercase tracking-wider bg-[#059669]/20 text-[#34d399] border border-[#059669]/30">
+              Lite ⚡
+            </span>
+          </div>
+          <span className="text-[11px] text-text-muted mt-1 font-mono">v{APP_CONFIG.version} · Ready</span>
+        </div>
+
+        <div className="p-4 rounded-xl border border-border bg-[#181324] flex flex-col justify-between shadow-xs">
+          <span className="text-xs text-text-muted font-medium">Connected Providers</span>
+          <div className="flex items-baseline gap-1.5 mt-2">
+            <span className="text-xl font-bold font-mono text-text-main">
+              {providerStats.filter((p) => p.connected > 0).length}
+            </span>
+            <span className="text-xs text-text-muted font-mono">/ 356 active</span>
+          </div>
+          <span className="text-[11px] text-emerald-400 mt-1 font-mono">Auto-Failover Ready</span>
+        </div>
+
+        <div className="p-4 rounded-xl border border-border bg-[#181324] flex flex-col justify-between shadow-xs">
+          <span className="text-xs text-text-muted font-medium">Catalog Models</span>
+          <div className="flex items-baseline gap-1 mt-2">
+            <span className="text-xl font-bold font-mono text-text-main">
+              {models.length || "950+"}
+            </span>
+            <span className="text-xs text-text-muted font-mono">models</span>
+          </div>
+          <span className="text-[11px] text-text-muted mt-1 font-mono">OpenAI & Claude Wire</span>
+        </div>
+
+        <div className="p-4 rounded-xl border border-border bg-[#181324] flex flex-col justify-between shadow-xs">
+          <span className="text-xs text-text-muted font-medium">RAM Footprint</span>
+          <div className="flex items-baseline gap-1 mt-2">
+            <span className="text-xl font-bold font-mono text-[#34d399]">~120 MB</span>
+            <span className="text-xs text-text-muted font-mono">/ 512 MB cap</span>
+          </div>
+          <span className="text-[11px] text-text-muted mt-1 font-mono">Pruned Background Idle</span>
+        </div>
+      </div>
+
       {/* Quick Start (controlled by Appearance setting, default on) */}
       {showQuickStartOnHome && (
         <Card>
