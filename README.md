@@ -15,11 +15,18 @@
 
 [![GitHub Stars](https://img.shields.io/github/stars/adamhasani/omliteroute?style=for-the-badge&logo=github&color=059669)](https://github.com/adamhasani/omliteroute/stargazers)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/adamhasani/omliteroute/ci.yml?branch=main&style=for-the-badge&logo=github&label=Build)](https://github.com/adamhasani/omliteroute/actions)
 [![RAM Usage](https://img.shields.io/badge/RAM_Idle-~120MB-34d399?style=for-the-badge)](README.md)
-[![Node Version](https://img.shields.io/badge/Node.js-≥18.0.0-blue?style=for-the-badge&logo=node.js)](package.json)
-[![Platform](https://img.shields.io/badge/Platform-Linux%20|%20macOS%20|%20Windows-818cf8?style=for-the-badge)](README.md)
+[![Docker](https://img.shields.io/badge/Docker-Alpine_~95MB-2496ED?style=for-the-badge&logo=docker&logoColor=white)](docker-compose.lite.yml)
 
 </div>
+
+<br/>
+
+```bash
+# ⚡ 1-Line Instant Universal Install (Linux & macOS)
+curl -fsSL https://raw.githubusercontent.com/adamhasani/omliteroute/main/install.sh | bash
+```
 
 <br/>
 
@@ -122,26 +129,58 @@ OmliteRoute discards all non-essential features that cause memory leaks and CPU 
 
 ### 1. Installation
 
-Clone the repository:
+**Method A: 1-Line Universal Script (Recommended)**
+```bash
+curl -fsSL https://raw.githubusercontent.com/adamhasani/omliteroute/main/install.sh | bash
+```
+
+**Method B: Git Clone & Run**
 ```bash
 git clone https://github.com/adamhasani/omliteroute.git
 cd omliteroute
 npm install
+./bin/omliteroute.mjs
 ```
 
-### 2. Running OmliteRoute
+**Method C: Docker Compose (Alpine ~95MB)**
+```bash
+docker compose -f docker-compose.lite.yml up -d
+```
 
-You can run OmliteRoute using any of the following methods:
+### 2. Commands & Live Monitoring
 
 ```bash
-# Option 1: Direct executable command
-./bin/omliteroute.mjs
+# Start OmliteRoute Gateway
+omliteroute
 
-# Option 2: Standard CLI with --lite flag
-node bin/omniroute.mjs serve --lite
+# Launch Real-Time Terminal Health & Latency Monitor
+omliteroute top
 
-# Option 3: Via environment variable
-OMNIROUTE_LITE=1 node bin/omniroute.mjs serve
+# Custom Port
+omliteroute --port 3000
+```
+
+```text
+===============================================================================
+🪶 OmliteRoute — Live Terminal Monitor  [Press Ctrl+C to exit]
+===============================================================================
+  Gateway:      ● ONLINE (http://127.0.0.1:20128)
+  Health Ping:  10 ms
+  Engine Mode:  Omni Lite ⚡ (V8 heap: 512MB max · Idle GC: Active)
+-------------------------------------------------------------------------------
+📊 Operational Metrics
+-------------------------------------------------------------------------------
+  Total AI Models:    953
+  SQLite Page Cache:  2 MB (clamped from 64MB)
+  Call Logs Rolling:  Active (auto-purged to latest 500 records)
+  Background Sched:   Pruned (15+ idle cron loops stopped)
+-------------------------------------------------------------------------------
+⚡ Core Endpoints Live Verification
+-------------------------------------------------------------------------------
+  ✔ GET  /api/health            200 OK (Zero-overhead probe)
+  ✔ GET  /v1/models             200 OK (Dynamic catalog)
+  ✔ POST /v1/chat/completions   Ready (OpenAI / Claude stream)
+===============================================================================
 ```
 
 The web dashboard will be live at:

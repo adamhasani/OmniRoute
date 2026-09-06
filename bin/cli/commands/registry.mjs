@@ -28,6 +28,7 @@ import { registerSimulate } from "./simulate.mjs";
 import { registerCost } from "./cost.mjs";
 import { registerUsage } from "./usage.mjs";
 import { registerServe } from "./serve.mjs";
+import { registerTop } from "./top.mjs";
 import { registerStop } from "./stop.mjs";
 import { registerRestart } from "./restart.mjs";
 import { registerDashboard } from "./dashboard.mjs";
@@ -114,6 +115,7 @@ export function registerCommands(program) {
   registerCost(program);
   registerUsage(program);
   registerServe(program);
+  registerTop(program);
   registerStop(program);
   registerRestart(program);
   registerDashboard(program);

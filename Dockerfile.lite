@@ -1,0 +1,46 @@
+# ==============================================================================
+# 🪶 OmliteRoute — Ultra-Lightweight Alpine Container Image (~95MB)
+# ==============================================================================
+
+FROM node:20-alpine AS runner
+
+WORKDIR /app
+
+# Install minimal native runtime dependencies for better-sqlite3
+RUN apk add --no-cache libc6-compat python3 make g++
+
+# Copy package descriptors
+COPY package*.json ./
+
+# Install production dependencies
+RUN npm install --omit=dev --ignore-scripts && \
+    npm rebuild better-sqlite3 && \
+    apk del make g++ python3 && \
+    rm -rf /root/.npm /tmp/*
+
+# Copy OmliteRoute application files
+COPY bin/ ./bin/
+COPY src/ ./src/
+COPY public/ ./public/
+COPY scripts/ ./scripts/
+COPY open-sse/ ./open-sse/
+COPY dist/ ./dist/ 2>/dev/null || true
+COPY next.config.mjs tsconfig.json ./
+
+# Runtime Environment Variables
+ENV NODE_ENV=production \
+    OMNIROUTE_LITE=1 \
+    OMNIROUTE_DISABLE_BACKGROUND_SERVICES=1 \
+    OMNIROUTE_MEMORY_MB=512 \
+    PORT=20128 \
+    HOSTNAME=0.0.0.0
+
+# Persistent volume for SQLite data & configurations
+VOLUME ["/root/.omniroute"]
+
+EXPOSE 20128
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
+  CMD wget --no-verbose --tries=1 --spider http://127.0.0.1:20128/api/health || exit 1
+
+CMD ["node", "bin/omliteroute.mjs", "serve", "--host", "0.0.0.0", "--port", "20128"]

@@ -1,0 +1,29 @@
+# ==============================================================================
+# 🪶 OmliteRoute — Docker Compose Setup
+# Run via: docker compose -f docker-compose.lite.yml up -d
+# ==============================================================================
+
+version: "3.8"
+
+services:
+  omliteroute:
+    build:
+      context: .
+      dockerfile: Dockerfile.lite
+    container_name: omliteroute
+    restart: unless-stopped
+    ports:
+      - "20128:20128"
+    environment:
+      - NODE_ENV=production
+      - OMNIROUTE_LITE=1
+      - OMNIROUTE_MEMORY_MB=512
+      - PORT=20128
+      - HOSTNAME=0.0.0.0
+      # - INITIAL_PASSWORD=CHANGEME
+    volumes:
+      - omlite_data:/root/.omniroute
+
+volumes:
+  omlite_data:
+    driver: local
