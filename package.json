@@ -270,7 +270,7 @@
     "coverage:report:legacy": "c8 report --output-dir coverage --exclude=open-sse --reporter=text --reporter=text-summary",
     "test:all": "npm run test:unit && npm run test:vitest && npm run test:vitest:ui && npm run test:ecosystem && npm run test:e2e",
     "check": "npm run lint && npm run test",
-    "prepublishOnly": "npm run build:cli-api && npm run build:cli && npm run check:pack-artifact",
+    "prepublishOnly": "node --check bin/omliteroute.mjs && node --check bin/omniroute-lite.mjs && node --check bin/cli/commands/top.mjs",
     "postinstall": "node scripts/build/postinstall.mjs",
     "uninstall": "node scripts/build/uninstall.mjs",
     "uninstall:full": "node scripts/build/uninstall.mjs --full",

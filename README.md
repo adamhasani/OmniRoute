@@ -13,6 +13,7 @@
 
 <br/>
 
+[![npm version](https://img.shields.io/npm/v/omliteroute.svg?style=for-the-badge&logo=npm&color=CB3837)](https://www.npmjs.com/package/omliteroute)
 [![GitHub Stars](https://img.shields.io/github/stars/adamhasani/omliteroute?style=for-the-badge&logo=github&color=059669)](https://github.com/adamhasani/omliteroute/stargazers)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/adamhasani/omliteroute/ci.yml?branch=main&style=for-the-badge&logo=github&label=Build)](https://github.com/adamhasani/omliteroute/actions)
@@ -24,8 +25,12 @@
 <br/>
 
 ```bash
-# ⚡ 1-Line Instant Universal Install (Linux & macOS)
-curl -fsSL https://raw.githubusercontent.com/adamhasani/omliteroute/main/install.sh | bash
+# ⚡ Install globally via npm
+npm install -g omliteroute
+omliteroute
+
+# Or run instantly without installing
+npx omliteroute
 ```
 
 <br/>
@@ -129,12 +134,19 @@ OmliteRoute discards all non-essential features that cause memory leaks and CPU 
 
 ### 1. Installation
 
-**Method A: 1-Line Universal Script (Recommended)**
+**Method A: Global via npm (Recommended)**
+```bash
+npm install -g omliteroute
+omliteroute
+```
+*Or run without installing:* `npx omliteroute`
+
+**Method B: 1-Line Universal Script (Linux & macOS)**
 ```bash
 curl -fsSL https://raw.githubusercontent.com/adamhasani/omliteroute/main/install.sh | bash
 ```
 
-**Method B: Git Clone & Run**
+**Method C: Git Clone & Run**
 ```bash
 git clone https://github.com/adamhasani/omliteroute.git
 cd omliteroute
@@ -142,7 +154,7 @@ npm install
 ./bin/omliteroute.mjs
 ```
 
-**Method C: Docker Compose (Alpine ~95MB)**
+**Method D: Docker Compose (Alpine ~95MB)**
 ```bash
 docker compose -f docker-compose.lite.yml up -d
 ```
