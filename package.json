@@ -1,9 +1,11 @@
 {
-  "name": "omniroute",
-  "version": "3.8.51",
-  "description": "Unified AI router with 356 providers, RTK+Caveman compression, auto fallback, MCP/A2A, desktop, PWA, and OpenAI-compatible APIs.",
+  "name": "omliteroute",
+  "version": "1.0.0",
+  "description": "OmliteRoute — Ultra-lightweight AI Gateway & Model Router. Low-RAM (~120MB), 356 providers, auto-fallback, and zero-bloat.",
   "type": "module",
   "bin": {
+    "omliteroute": "bin/omliteroute.mjs",
+    "omni-lite": "bin/omniroute-lite.mjs",
     "omniroute": "bin/omniroute.mjs",
     "omniroute-lite": "bin/omniroute-lite.mjs",
     "omniroute-reset-password": "bin/reset-password.mjs"
@@ -84,12 +86,12 @@
     "auto-fallback"
   ],
   "license": "MIT",
-  "author": "diegosouzapw",
+  "author": "Adam Hasani <adamhasani018@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/diegosouzapw/OmniRoute"
+    "url": "https://github.com/adamhasani/omliteroute"
   },
-  "homepage": "https://omniroute.online",
+  "homepage": "https://github.com/adamhasani/omliteroute",
   "scripts": {
     "dev": "node --max-old-space-size=8192 scripts/dev/run-next.mjs dev",
     "prebuild:docs": "node scripts/docs/gen-openapi-module.mjs",

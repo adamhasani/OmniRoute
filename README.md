@@ -1,13 +1,17 @@
 <div align="center">
 
-<img src="./docs/screenshots/MainOmniRoute.png" alt="OmniRoute Dashboard" width="820"/>
+<img src="./docs/screenshots/MainOmniRoute.png" alt="OmliteRoute Dashboard" width="820"/>
 
 <br/>
 <br/>
 
-# 🚀 OmniRoute — The Free AI Gateway
+# 🪶 OmliteRoute — Ultra-Lightweight Multi-Provider AI Gateway
 
-<img src="./docs/diagrams/readme-hero.svg" width="100%" alt="OmniRoute — Never stop coding. Every AI tool → 356 providers — 150+ free — through one endpoint. Claude Code, Codex, Cursor, Cline, Copilot & Antigravity into FREE Claude / GPT / Gemini with auto-fallback. RTK + Caveman stacked compression saves 15–95% tokens (~89% avg) — never hit limits. 356 AI providers · 150+ free tiers · ~1.47B free tokens/mo · 19 routing strategies · $0 to start."/>
+**Low-RAM (~120MB) · Zero-Bloat · 356 AI Providers · Auto-Fallback · RTK Compression**
+
+[![GitHub Stars](https://img.shields.io/github/stars/adamhasani/omliteroute?style=social)](https://github.com/adamhasani/omliteroute)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![RAM Usage](https://img.shields.io/badge/RAM_Usage-~120MB-059669)](README.md)
 
 </div>
 
@@ -1078,16 +1082,19 @@ Standard OmniRoute is designed as an all-in-one enterprise platform that frequen
 
 ---
 
-### 🚀 5. How to Run OmniRoute Lite
+### 🚀 5. How to Run OmliteRoute
 
 ```bash
-# Option 1: Using the dedicated binary (recommended)
-omniroute-lite
+# Option 1: Direct command
+omliteroute
 
-# Option 2: Using the standard CLI with --lite flag
+# Option 2: Using the alias binary
+omni-lite
+
+# Option 3: Standard CLI with --lite flag
 omniroute serve --lite
 
-# Option 3: Via environment variable
+# Option 4: Via environment variable
 OMNIROUTE_LITE=1 omniroute
 ```
 
@@ -1099,11 +1106,10 @@ OMNIROUTE_LITE=1 omniroute
 
 </div>
 
-**1) Install & run**
+**1) Run OmliteRoute**
 
 ```bash
-npm install -g omniroute
-omniroute
+omliteroute
 ```
 
 > 💡 See `npm warn ERESOLVE` or peer-dep warnings? [They're harmless](docs/guides/TROUBLESHOOTING.md#npm-install-warnings-eresolve--peer--deprecated).
